@@ -100,6 +100,7 @@ export const createCartProductElement = ({ id, title, price, pictures }) => {
  * @param {number} product.price - Preço do produto.
  * @returns {Element} Elemento de produto.
  */
+
 export const createProductElement = ({ id, title, thumbnail, price }) => {
   const section = document.createElement('section');
   section.className = 'product';
