@@ -1,4 +1,4 @@
-import { saveCartID } from './helpers/cartFunctions';
+import { getSavedCartIDs, saveCartID } from './helpers/cartFunctions';
 import { searchCep } from './helpers/cepFunctions';
 import { fetchProduct, fetchProductsList } from './helpers/fetchFunctions';
 import { createCartProductElement, createProductElement } from './helpers/shopFunctions';
@@ -41,3 +41,11 @@ makeList.addEventListener('click', async (param) => {
     cart.appendChild(productCart);
   }
 });
+
+if (localStorage.cartProducts) {
+  JSON.parse(localStorage.cartProducts).map(async (e) => {
+    const result = await fetchProduct(e);
+    const productCart = createCartProductElement(result);
+    cart.appendChild(productCart);
+  });
+}
