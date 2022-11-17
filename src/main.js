@@ -14,18 +14,9 @@ const loading = () => {
   makeList.appendChild(load);
 };
 
-const removeLoading = () => {
-  const remove = document.querySelector('.loading');
-  load.remove();
-};
-
-loading();
-
 const list = await fetchProductsList('computador');
 
 list.forEach((element) => {
   const productItem = createProductElement(element);
   makeList.appendChild(productItem);
 });
-
-removeLoading();
