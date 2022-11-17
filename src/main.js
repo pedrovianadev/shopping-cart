@@ -1,11 +1,13 @@
+import { saveCartID } from './helpers/cartFunctions';
 import { searchCep } from './helpers/cepFunctions';
-import { fetchProductsList } from './helpers/fetchFunctions';
-import { createProductElement } from './helpers/shopFunctions';
+import { fetchProduct, fetchProductsList } from './helpers/fetchFunctions';
+import { createCartProductElement, createProductElement } from './helpers/shopFunctions';
 import './style.css';
 
 document.querySelector('.cep-button').addEventListener('click', searchCep);
 
 const makeList = document.querySelector('.products');
+const cart = document.querySelector('.cart__products');
 
 const load = document.createElement('h1');
 load.innerText = 'carregando...';
@@ -28,3 +30,14 @@ try {
   makeMsg.className = 'error';
   makeList.appendChild(makeMsg);
 }
+
+makeList.addEventListener('click', async (param) => {
+  if (param.target.className === 'product__add') {
+    const targetItem = param.target;
+    const id = targetItem.parentNode.firstChild.innerText;
+    saveCartID(id);
+    const result = await fetchProduct(id);
+    const productCart = createCartProductElement(result);
+    cart.appendChild(productCart);
+  }
+});
