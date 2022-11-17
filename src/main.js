@@ -7,25 +7,24 @@ document.querySelector('.cep-button').addEventListener('click', searchCep);
 
 const makeList = document.querySelector('.products');
 
-function loading() {
-  const load = document.createElement('h1');
-  load.innerText = 'carregando...';
-  load.className = 'loading';
-  makeList.appendChild(load);
+const load = document.createElement('h1');
+load.innerText = 'carregando...';
+load.className = 'loading';
+makeList.appendChild(load);
+
+try {
+  const list = await fetchProductsList('computador');
+  const rmvLoad = document.querySelector('.loading');
+  rmvLoad.remove();
+
+  list.forEach((element) => {
+    const productItem = createProductElement(element);
+    makeList.appendChild(productItem);
+  });
+} catch (error) {
+  const makeMsg = document.createElement('p');
+  const msg = 'Algum erro ocorreu, recarregue a página e tente novamente';
+  makeMsg.innerText = msg;
+  makeMsg.className = 'error';
+  makeList.appendChild(makeMsg);
 }
-
-function removeLoad() {
-  const load = document.querySelector('.loading');
-  load.remove();
-}
-
-loading();
-
-const list = await fetchProductsList('computador');
-
-list.forEach((element) => {
-  const productItem = createProductElement(element);
-  makeList.appendChild(productItem);
-});
-
-removeLoad();
